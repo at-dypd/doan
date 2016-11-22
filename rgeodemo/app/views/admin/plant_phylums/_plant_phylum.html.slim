@@ -1,0 +1,21 @@
+tr data-id= "show_#{plant_phylum.id}"
+  td =plant_phylum_counter+1
+  td =plant_phylum.name
+  td =plant_phylum.description
+  td =plant_phylum.created_at
+  td.text-center
+    a href="#"
+      i.glyphicon.glyphicon-pencil#edit_button
+    =link_to admin_plant_phylum_path(plant_phylum.id), method: :delete
+      i.glyphicon.glyphicon-trash
+tr.info style="display: none" data-id= plant_phylum.id
+  =form_for plant_phylum, url: admin_plant_phylum_path(plant_phylum.id), method: :put, remote: true do |f|
+    td
+    td
+      =f.text_field :name, class: "form-control"
+    td
+      =f.text_area :description, class: "form-control", row: 1
+    td
+      =plant_phylum.updated_at
+    td.text-center
+      =f.submit t(".ok"), class: "btn btn-primary ", id: "update_plant_phylum_btn"

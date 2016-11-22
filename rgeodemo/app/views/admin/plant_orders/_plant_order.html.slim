@@ -1,0 +1,21 @@
+tr data-id= "show_#{plant_order.id}"
+  td =plant_order_counter+1
+  td =plant_order.name
+  td =plant_order.description
+  td =plant_order.created_at
+  td.text-center
+    a href="#"
+      i.glyphicon.glyphicon-pencil#edit_button
+    =link_to admin_plant_order_path(plant_order.id), method: :delete
+      i.glyphicon.glyphicon-trash
+tr.info style="display: none" data-id= plant_order.id
+  =form_for plant_order, url: admin_plant_order_path(plant_order.id), method: :put, remote: true do |f|
+    td
+    td
+      =f.text_field :name, class: "form-control"
+    td
+      =f.text_area :description, class: "form-control", row: 1
+    td
+      =plant_order.updated_at
+    td.text-center
+      =f.submit t(".ok"), class: "btn btn-primary ", id: "update_plant_order_btn"

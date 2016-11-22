@@ -1,0 +1,54 @@
+.plant-frame-div
+  .plant-image-frame-div
+    =image_tag(MedicinalPlant.first.plant_avatar_url, size: "200x200")
+  br
+  .divider
+  .infor
+    .row
+      .col-md-4
+        label
+          | Tên 
+      .col-md-8
+        = @medicinal_plant.name
+    .row
+      .col-md-4
+        label
+          |  Ngành 
+      .col-md-8
+        = @medicinal_plant.plant_phylum.try(:name)
+    .row
+      .col-md-4
+        label
+          |  Giới 
+      .col-md-8
+        = @medicinal_plant.plant_kingdom.try(:name)
+    .row
+      .col-md-4
+        label
+          |  Lớp 
+      .col-md-8
+        = @medicinal_plant.plant_class.try(:name)
+    .row
+      .col-md-4
+        label
+          |  Bộ 
+      .col-md-8
+        = @medicinal_plant.plant_order.try(:name)
+    .row
+      .col-md-4
+        label
+          |  Họ  
+      .col-md-8
+        
+    .row
+      .col-md-4
+        label
+          |  Dạng sống 
+      .col-md-8
+        = @medicinal_plant.life_type.try(:name)
+    .row
+      .col-md-4
+        label
+          |  Sinh cảnh 
+      .col-md-8
+        = @medicinal_plant.plant_habitats.pluck(:name).join(", ")

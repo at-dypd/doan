@@ -1,0 +1,43 @@
+.panel.panel-default.div-rounded#floating-panel
+  .panel-heading
+    .row
+      .col-md-5
+        h3 Tìm kiếm
+      .col-md-7
+        a.search-toggle-button class="btn btn-default btn-circle" onclick="toggleSearchForm()"
+          i.glyphicon.glyphicon-resize-vertical
+  .panel-body.search-form-body
+    =search_form_for @q, url: root_path, method: :get do |f|
+      .row.search-form
+        .col-md-3
+          label
+            | Tên 
+        .col-md-9
+          =f.text_field :name_cont, class: "form-control"
+      br
+      .row.search-form
+        .col-md-3
+          label
+            | Tên khoa hoc 
+        .col-md-9
+          =f.text_field :scientific_name_cont, class: "form-control"
+      br
+      .row.search-form
+        .col-md-3
+          label
+            | Chon cay
+        .col-md-9
+          =select_tag :ids, options_for_select(@medicinal_plants.collect{|c| [c.name, c.id]}, selected: @medicinal_plant.try(:id)), {include_blank: true, class: "selectpicker", "data-url" => user_medicinal_plant_path(id: 1, q: params[:q]), multiple: true}
+      br
+      .row.search-form
+        label
+          | Chon muc luc
+      =f.select :plant_order_id_in, @plant_orders.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_order")}, class: "selectpicker", multiple: true
+      =f.select :plant_class_id_in, @plant_classes.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_class")}, class: "selectpicker", multiple: true
+      =f.select :plant_kingdom_id_in, @plant_kingdoms.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_kingdom")}, class: "selectpicker", multiple: true
+      =f.select :plant_phylum_id_in, @plant_phylums.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_phylum")}, class: "selectpicker", multiple: true
+      br
+        .row
+          .col-md-3.pull-right.text-right
+            =f.submit t("button.search"), class: "btn btn-"
+

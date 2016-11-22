@@ -1,0 +1,24 @@
+$('#notice_message').empty()
+<% if @plant_habitat.errors.blank? %>
+  $('[data-id="<%= @plant_habitat.id %>"]').hide("drop")
+  tr = $('[data-id="show_<%= @plant_habitat.id %>"]')
+  td_elements = tr.find('td')
+  $(td_elements[1])[0].innerText = "<%= @plant_habitat.name %>"
+  $(td_elements[2])[0].innerText = "<%= @plant_habitat.description %>"
+  $('#notice_message').append(message);
+<% else %>
+  $('#notice_message').append(messageFail);
+<% end %>
+
+function message() {
+  var text = "<div class='alert alert-success' role='alert'>";
+  text += '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+  text += "<%= flash[:success] %></div>";
+  return text;
+}
+function messageFail() {
+  var text = "<div class='alert alert-danger' role='alert'>";
+  text += '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+  text += "<%= @plant_habitat.errors.full_messages[0] %></div>";
+  return text;
+}

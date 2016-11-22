@@ -1,0 +1,21 @@
+tr data-id= "show_#{life_type.id}"
+  td =life_type_counter+1
+  td =life_type.name
+  td =life_type.description
+  td =life_type.created_at
+  td.text-center
+    a href="#"
+      i.glyphicon.glyphicon-pencil#edit_button
+    =link_to admin_life_type_path(life_type.id), method: :delete
+      i.glyphicon.glyphicon-trash
+tr.info style="display: none" data-id= life_type.id
+  =form_for life_type, url: admin_life_type_path(life_type.id), method: :put, remote: true do |f|
+    td
+    td
+      =f.text_field :name, class: "form-control"
+    td
+      =f.text_area :description, class: "form-control", row: 1
+    td
+      =life_type.updated_at
+    td.text-center
+      =f.submit t(".ok"), class: "btn btn-primary ", id: "update_item_btn"

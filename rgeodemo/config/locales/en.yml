@@ -1,0 +1,75 @@
+en:
+  admin:
+    life_types:
+      index:
+        create: "Tạo mới"
+        description: "Mô tả"
+        name: "Tên"
+      life_type:
+        ok: "OK"
+    plant_classes:
+      index:
+        create: "Tạo mới"
+        description: "Mô tả"
+        name: "Tên"
+      plant_class:
+        ok: "OK"
+    plant_habitats:
+      index:
+        create: "Tạo mới"
+        description: "Mô tả"
+        name: "Tên"
+      plant_habitat:
+        ok: "OK"
+    plant_kingdoms:
+      index:
+        create: "Tạo mới"
+        description: "Mô tả"
+        name: "Tên"
+      plant_kingdom:
+        ok: "OK"
+    plant_orders:
+      index:
+        create: "Tạo mới"
+        description: "Mô tả"
+        name: "Tên"
+      plant_order:
+        ok: "OK"
+    plant_phylums:
+      index:
+        create: "Tạo mới"
+        description: "Mô tả"
+        name: "Tên"
+      plant_phylum:
+        ok: "OK"
+    used_parts:
+      index:
+        create: "Tạo mới"
+        description: "Mô tả"
+        name: "Tên"
+      used_part:
+        ok: "OK"
+    medicinal_plants:
+      index:
+        create: "Tạo mới"
+        name: "Tên"
+        image_upload: "Ảnh đại diện"
+        used_parts: "Bộ phận sử dụng"
+        description: "Mô tả"
+        plant_habitats: "Sinh cảnh"
+        image_present: "Ảnh đại diện"
+        created_at: "Ngày tạo"
+        action: "Tác vụ"
+      item:
+        ok: "OK"
+    import:
+      index:
+        create: "Nhập"
+    location_import:
+      index:
+        create: "Nhập"
+  common:
+    success: "Thành công"
+    fail: "Thất bại"
+  button:
+    search: "Tìm "

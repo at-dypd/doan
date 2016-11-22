@@ -1,0 +1,80 @@
+.container
+  #notice_message
+    -if flash[:success].present?
+      .alert.alert-success role="role"
+        button type="button" class="close" data-dismiss="alert" aria-label="Close"
+          span aria-hidden="true" &times;
+        =flash[:success]
+    -elsif flash[:danger].present?
+      .alert.alert-danger role="role"
+        button type="button" class="close" data-dismiss="alert" aria-label="Close"
+          span aria-hidden="true" &times;
+        =flash[:danger]
+  .panel.panel-default
+    .panel-heading
+      h3 =t(".create")
+    .panel-body
+      =form_for @item_new, url: admin_medicinal_plants_path, method: :post do |f|
+        .row style="min-height: 100px"
+          .col-md-1
+          .col-md-3
+            =f.select :plant_order_id, @plant_orders.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_order")}, class: "form-control"
+          .col-md-3
+            =f.select :plant_class_id, @plant_classes.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_class")}, class: "form-control"
+          .col-md-3
+            =f.select :plant_kingdom_id, @plant_kingdoms.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_kingdom")}, class: "form-control"
+          .col-md-2
+            =f.select :plant_phylum_id, @plant_phylums.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_phylum")}, class: "form-control"
+        .row
+          .col-md-1
+            label
+              =t(".name")
+          .col-md-3
+            =f.text_field :name, class: "form-control"
+          .col-md-1
+            label
+              =t(".image_upload")
+          .col-md-3#upload_form
+            =f.file_field :plant_avatar
+          .col-md-1
+            label
+              =t(".used_parts")
+          .col-md-3
+        .row
+          .col-md-1
+            label
+              =t(".description")
+          .col-md-3
+            =f.text_area :description, class: "form-control", row: 1
+          .col-md-1
+          .col-md-3
+            img id="img_prev" src="#" alt="your image"
+          .col-md-1
+            label
+              =t(".plant_habitats")
+          .col-md-3
+            =select_tag "plant_habitat_ids", options_for_select(@plant_habitats.collect{|c| [c.name, c.id]}), {class: "selectpicker plant_habitat", multiple: true, include_blank: true}          
+        .col-md-2.pull-right.text-right
+          =f.submit t(".create"), class: "btn btn-primary ", id: "update_item_btn"
+  .row
+    .col-md-4
+      = page_entries_info @items, entry_name: ''
+    .col-md-8
+      .span.pull-right
+        = paginate @items, theme: 'twitter-bootstrap-3'
+  table.table.table-striped.table-bordered.table-hover#admin_management_table
+    thead
+      th
+      th =t(".name")
+      th =t(".image_present")
+      th =t(".description")
+      th =t(".plant_habitats")
+      th =t(".used_parts")
+      th =t(".created_at")
+      th.text-center =t(".action")
+    tbody
+      = render partial: "item", collection: @items 
+  .row
+    .col-md-2.pull-right.text-right
+      button.btn.btn-primary type="button"
+        =t(".create")

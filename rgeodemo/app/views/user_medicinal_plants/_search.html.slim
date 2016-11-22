@@ -1,0 +1,34 @@
+.panel.panel-default.div-rounded
+  .panel-heading
+    h3 Tìm kiếm 
+  .panel-body
+    =search_form_for @q, url: root_path, method: :get do |f|
+      .row.search-form
+        .col-md-3
+          label
+            | Tên 
+        .col-md-4
+          =f.text_field :name_cont, class: "form-control"
+      br
+      .row.search-form
+        .col-md-3
+          label
+            | Tên khoa hoc 
+        .col-md-4
+          =f.text_field :scientific_name_cont, class: "form-control"
+      br
+      .row.search-form
+        .col-md-1
+        .col-md-3
+          =f.select :plant_order_id_in, @plant_orders.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_order")}, class: "form-control selectpicker", multiple: true
+        .col-md-3
+          =f.select :plant_class_id_in, @plant_classes.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_class")}, class: "form-control selectpicker", multiple: true
+        .col-md-3
+          =f.select :plant_kingdom_id_in, @plant_kingdoms.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_kingdom")}, class: "form-control selectpicker", multiple: true
+        .col-md-2
+          =f.select :plant_phylum_id_in, @plant_phylums.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_phylum")}, class: "form-control selectpicker", multiple: true
+      br
+        .row
+          .col-md-3.pull-right.text-right
+            =f.submit t("button.search"), class: "btn btn-"
+

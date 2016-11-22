@@ -1,0 +1,32 @@
+=render partial: "map_js"
+script async="" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDevygh-3JBsUfmi2INmQs1ER7ZlpT4a7k&libraries=visualization&callback=initMap"
+=render partial: "search"
+.row
+  .col-md-4
+    =render partial: "medicinal_plant"
+  .col-md-7
+    .floating-panel
+      button onclick="toggleHeatmap()" 
+        | Toggle Heatmap
+      button onclick="changeGradient()" 
+        | Change gradient
+      button onclick="changeRadius()" 
+        | Change radius
+      button onclick="changeOpacity()" 
+        | Change opacity
+      =select_tag :id, options_for_select(@medicinal_plants.collect{|c| [c.name, c.id]}, selected: @medicinal_plant.try(:id)), {include_blank: true, class: "medicinal-plant-search-selector", "data-url" => user_medicinal_plant_path(id: 1, q: params[:q])}
+    .plant-map-frame
+      #map
+    br
+    .row
+      .col-md-6.text-right
+        - if @previous_plant.present? 
+          =link_to "(#{@object_index})<< #{@previous_plant.name} ", user_medicinal_plant_path(@previous_plant, q: params[:q]), class: "btn btn-primary"
+      .col-md-2.text-center
+        button class="btn"
+          = @medicinal_plant.name
+      .col-md-4
+        - if @next_plant.present? 
+          =link_to "#{@next_plant.name} >>(#{@object_index + 2})", user_medicinal_plant_path(@next_plant, q: params[:q]), class: "btn btn-primary"
+#modal-medicinal-plant
+  =render "edit"

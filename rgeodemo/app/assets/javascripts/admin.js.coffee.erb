@@ -1,0 +1,36 @@
+$ ->
+  $(document).ready ->
+    $('.selectpicker').selectpicker()
+    return
+  $("#admin_management_table").on 'click', '#update_item_btn', ->
+    value_array_1 = []
+    value_array_2 = []
+    used_part_selected = $(this).closest("tr").find('.selectpicker.used_part option:selected')
+    $.each used_part_selected, (index, selector) ->
+      value_array_1.push(selector.value)
+    plant_habitat_selected = $(this).closest("tr").find('.selectpicker.plant_habitat option:selected')
+    $.each plant_habitat_selected, (index, selector) ->
+      value_array_2.push(selector.value)
+    $(this).closest("tr").find('#plant_habitat_ids')[0].value = value_array_2
+    $(this).closest("tr").find('#used_part_ids')[0].value = value_array_1
+
+  $("#admin_management_table").on 'click', "#edit_button", ->
+    $(this).closest("tr").next().show()
+    return false
+
+  $(document).on 'change', '#medicinal_plant_plant_avatar', ->
+    readURL this
+    return
+  $(document).on 'mouseover', '#img_prev', ->
+    
+
+readURL = (input) ->
+  if input.files and input.files[0]
+    reader = new FileReader
+
+    reader.onload = (e) ->
+      $('#img_prev').attr('src', e.target.result).width(100).height 100
+      return
+
+    reader.readAsDataURL input.files[0]
+  return

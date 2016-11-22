@@ -1,0 +1,51 @@
+.container
+  #notice_message
+    -if flash[:success].present?
+      .alert.alert-success role="role"
+        button type="button" class="close" data-dismiss="alert" aria-label="Close"
+          span aria-hidden="true" &times;
+        =flash[:success]
+    -elsif flash[:danger].present?
+      .alert.alert-danger role="role"
+        button type="button" class="close" data-dismiss="alert" aria-label="Close"
+          span aria-hidden="true" &times;
+        =@used_part.errors.full_messages[0]
+  .panel.panel-default
+    .panel-heading
+      h3 =t(".create")
+    .panel-body
+      =form_for @new_object, url: admin_used_parts_path, method: :post do |f|
+        .row
+          .col-md-1
+            label
+              =t(".name")
+          .col-md-3
+            =f.text_field :name, class: "form-control"
+        .row
+          .col-md-1
+            label
+              =t(".description")
+          .col-md-3
+            =f.text_area :description, class: "form-control", row: 1
+          
+        .col-md-2.pull-right.text-right
+          =f.submit t(".create"), class: "btn btn-primary ", id: "update_item_btn"
+  .row
+    .col-md-4
+      = page_entries_info @used_parts, entry_name: ''
+    .col-md-8
+      .span.pull-right
+        = paginate @used_parts, theme: 'twitter-bootstrap-3'
+  table.table.table-striped.table-bordered.table-hover#admin_management_table
+    thead
+      th
+      th =t(".name")
+      th =t(".description")
+      th =t(".created_at")
+      th.text-center =t(".action")
+    tbody
+      = render partial: "used_part", collection: @used_parts 
+  .row
+    .col-md-2.pull-right.text-right
+      button.btn.btn-primary type="button"
+        =t(".create")

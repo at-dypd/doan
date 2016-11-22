@@ -1,0 +1,12 @@
+.medicinal-plant-update-modal.modal.fade role="dialog" tabindex="-1" 
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  &times;
+        h4.modal-title 
+          span.glyphicon.glyphicon-th-large  =t ".update"
+          ul.pager
+      .medicinal-plant-detail
+      	=form_for @medicinal_plant, url: user_medicinal_plant_path(@medicinal_plant), method: :put do |f|
+      		=render partial: "form", locals: {f: f}

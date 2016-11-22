@@ -1,0 +1,19 @@
+=render partial: "map_js"
+script async="" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDevygh-3JBsUfmi2INmQs1ER7ZlpT4a7k&libraries=visualization&callback=initMap"
+=render partial: "search"
+.row
+  .col-md-4
+    =render partial: "medicinal_plant"
+  .col-md-7
+    .floating-panel
+      button onclick="toggleHeatmap()" 
+        | Toggle Heatmap
+      button onclick="changeGradient()" 
+        | Change gradient
+      button onclick="changeRadius()" 
+        | Change radius
+      button onclick="changeOpacity()" 
+        | Change opacity
+    .plant-map-frame
+      #map
+

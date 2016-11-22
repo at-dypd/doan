@@ -1,0 +1,5 @@
+$ ->
+	$(document).on 'change', ".medicinal-plant-search-selector", ->
+		url = $(this).data("url") + "&object_id=" + $(this).val()
+		window.location.href = url
+	

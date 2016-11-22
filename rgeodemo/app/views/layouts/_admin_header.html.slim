@@ -1,0 +1,61 @@
+.wrap
+  nav
+    ul.menu
+      li
+        =link_to root_path
+          | Trang chu
+      li
+        a href="#"
+          | Quản lý dữ liệu 
+        ul
+          li
+            =link_to admin_medicinal_plants_path
+              p Cây thuốc
+          li
+            =link_to admin_life_types_path
+              p Dạng Sống 
+          li
+            =link_to admin_plant_classes_path
+              p Lớp
+          li
+            =link_to admin_plant_orders_path
+              p Ngành 
+          li
+            =link_to admin_plant_habitats_path
+              p Sinh Cảnh
+          li
+            =link_to admin_plant_kingdoms_path
+              p Họ 
+          li
+            =link_to admin_plant_phylums_path
+              p Bộ 
+          li
+            =link_to admin_used_parts_path
+              p Bộ phận dùng
+        li
+          a href="#"
+            | Gallary
+          ul
+            li
+              a href="#"
+                | Bộ
+            li
+              a href="#"
+                | Họ
+            li
+              a href="#"
+                | Ngành
+            li
+              a href="#"
+                | Lớp
+        li
+          a href="#"
+            | Import
+          ul
+            li
+              = link_to admin_import_index_path
+                | Nhập file dữ liệu cây thuôc
+            li
+              = link_to admin_location_import_index_path
+                | Nhập file dữ liệu toạ độ
+    .clearfix

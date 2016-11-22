@@ -1,0 +1,33 @@
+tr data-id= "show_#{item.id}"
+  td =item_position(params, item_counter)
+  td =item.name
+  td =image_tag(item.plant_avatar_url(:thumb))
+  td =item.description
+  td
+    -item.plant_habitats.each do |plant_habitat|
+      button.btn.btn-default.btn-table-td type="button" =plant_habitat.name
+  td
+  td =item.created_at
+  td.text-center
+    a href="#"
+      i.glyphicon.glyphicon-pencil#edit_button
+    =link_to admin_medicinal_plant_path(item.id), method: :delete
+      i.glyphicon.glyphicon-trash
+tr.info style="display: none" data-id= item.id
+  =form_for item, url: admin_medicinal_plant_path(item.id), html: {multipart: true}, method: :put do |f|
+    td
+    td
+      =f.text_field :name, class: "form-control"
+    td#upload_form
+      =f.file_field :plant_avatar
+    td
+      =f.text_area :description, class: "form-control", row: 1
+    td
+      =select_tag "plant_habitats", options_for_select(@plant_habitats.collect{|c| [c.name, c.id]}, selected: item.plant_habitats.collect{|c| c.id}), {class: "selectpicker plant_habitat", multiple: true, include_blank: true}
+      =hidden_field_tag "plant_habitat_ids", "", id: "plant_habitat_ids"
+    td
+      =hidden_field_tag "used_part_ids", "", id: "used_part_ids"
+    td
+      =item.updated_at
+    td.text-center
+      =f.submit t(".ok"), class: "btn btn-primary ", id: "update_item_btn"

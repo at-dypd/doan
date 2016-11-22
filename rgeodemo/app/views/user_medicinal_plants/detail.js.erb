@@ -1,0 +1,4 @@
+$(".modal-medicinal-plant").empty();
+$('.modal-backdrop').remove();
+$(".modal-medicinal-plant").append("<%= escape_javascript(render 'edit') %>");
+$(".medicinal-plant-update-modal").modal('show');

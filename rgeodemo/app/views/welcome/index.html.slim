@@ -1,0 +1,27 @@
+=render partial: "map_js"
+script async="" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDevygh-3JBsUfmi2INmQs1ER7ZlpT4a7k&libraries=visualization,drawing&callback=initMap"
+.row    
+  .col-md-12
+    .floating-panel
+      button onclick="toggleHeatmap()" 
+        | Toggle Heatmap
+      button onclick="changeGradient()" 
+        | Change gradient
+      button onclick="changeRadius()" 
+        | Change radius
+      button onclick="changeOpacity()" 
+        | Change opacity
+      button onclick="deleteAllShape()"
+        | Delete all shape
+      button onclick="showMarkers()"
+        | Show markers
+    .plant-map-frame
+      #map
+      =render partial: "search"
+      button.btn.btn-info.btn-lg.button-search-form
+        i.glyphicon.glyphicon-search
+      =form_tag root_path, class: "drawing-form", method: :get do |f|
+        =hidden_field_tag "polygon_points"
+        =hidden_field_tag "circle_points[]", "", multiple: true
+.modal-medicinal-plant
+  =render "edit"

@@ -1,0 +1,32 @@
+.search-toggle-button {
+	margin-top: 20px;
+	margin-left: 100px;
+}
+#floating-panel {
+	display: none;
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: -1;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+.button-search-form {
+	position: absolute;
+  top: 30px;
+  left: 90%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}

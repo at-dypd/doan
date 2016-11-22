@@ -1,0 +1,245 @@
+javascript:
+  var map, heatmap;
+  var all_polygons = [];
+  var all_circles = [];
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: {lat: 15.9977352, lng: 107.9880772}
+     });
+    heatmap = new google.maps.visualization.HeatmapLayer({
+      data: getPoints(),
+      map: map
+    });
+
+    drawingManager = new google.maps.drawing.DrawingManager({
+      drawingControl: true,
+      drawingControlOptions: {
+        position: google.maps.ControlPosition.TOP_CENTER,
+        drawingModes: ['marker', 'circle', 'polygon', 'polyline', 'rectangle']
+      },
+      markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
+      circleOptions: {
+      fillOpacity: 0.5,
+      strokeWeight: 0.2,
+      clickable: false,
+      dragable: true,
+      editable: true,
+      zIndex: 1
+      }
+    });
+    drawingManager.setMap(map);
+
+    google.maps.event.addListener(drawingManager, 'polygoncomplete', function(polygon) {
+      deleteAllShape();
+      all_polygons.push(polygon);
+      var arr = [];
+      var locations = gon.locations;
+      $.each(locations, function( index, value ) {
+        latlon = new google.maps.LatLng(locations[index][1], locations[index][0]);
+        if (google.maps.geometry.poly.containsLocation(latlon, polygon)) {
+          arr.push(locations[index][1], locations[index][0]);
+        }
+      });
+      this_form = $(".plant-map-frame").find(".drawing-form");
+      this_form.find("#polygon_points").val(arr.join(','));
+      $(this_form).submit();
+    });
+
+    google.maps.event.addListener(drawingManager, 'circlecomplete', function(circle) {
+      deleteAllShape();
+      all_circles.push(circle);
+      var arr = [];
+      var locations = gon.locations;
+      $.each(locations, function( index, value ) {
+        latlon = new google.maps.LatLng(locations[index][1], locations[index][0]);
+        if (google.maps.geometry.spherical.computeDistanceBetween(latlon, circle.getCenter()) <= circle.getRadius()) {
+          arr.push([locations[index][1], locations[index][0]]);
+        }
+      });
+      this_form = $(".plant-map-frame").find(".drawing-form");
+      this_form.find("#circle_points").val(arr.join(','));
+      $(this_form).submit();
+    });
+
+    // Polygon getBounds extension - google-maps-extensions
+    // https://github.com/tparkin/Google-Maps-Point-in-Polygon
+    // http://code.google.com/p/google-maps-extensions/source/browse/google.maps.Polygon.getBounds.js
+    if (!google.maps.Polygon.prototype.getBounds) {
+      google.maps.Polygon.prototype.getBounds = function(latLng) {
+        var bounds = new google.maps.LatLngBounds(),
+          paths = this.getPaths(),
+          path,
+          p, i;
+
+        for (p = 0; p < paths.getLength(); p++) {
+          path = paths.getAt(p);
+          for (i = 0; i < path.getLength(); i++) {
+            bounds.extend(path.getAt(i));
+          }
+        }
+
+        return bounds;
+      };
+    }
+
+    // Polygon containsLatLng - method to determine if a latLng is within a polygon
+    google.maps.Polygon.prototype.containsLatLng = function(latLng) {
+      // Exclude points outside of bounds as there is no way they are in the poly
+
+      var inPoly = false,
+        bounds, lat, lng,
+        numPaths, p, path, numPoints,
+        i, j, vertex1, vertex2;
+
+      // Arguments are a pair of lat, lng variables
+      if (arguments.length == 2) {
+        if (
+          typeof arguments[0] == "number" &&
+          typeof arguments[1] == "number"
+        ) {
+          lat = arguments[0];
+          lng = arguments[1];
+        }
+      } else if (arguments.length == 1) {
+        bounds = this.getBounds();
+
+        if (!bounds && !bounds.contains(latLng)) {
+          return false;
+        }
+        lat = latLng.lat();
+        lng = latLng.lng();
+      } else {
+        console.log("Wrong number of inputs in google.maps.Polygon.prototype.contains.LatLng");
+      }
+
+      // Raycast point in polygon method
+
+      numPaths = this.getPaths().getLength();
+      for (p = 0; p < numPaths; p++) {
+        path = this.getPaths().getAt(p);
+        numPoints = path.getLength();
+        j = numPoints - 1;
+
+        for (i = 0; i < numPoints; i++) {
+          vertex1 = path.getAt(i);
+          vertex2 = path.getAt(j);
+
+          if (
+            vertex1.lng() <  lng &&
+            vertex2.lng() >= lng ||
+            vertex2.lng() <  lng &&
+            vertex1.lng() >= lng
+          ) {
+            if (
+              vertex1.lat() +
+              (lng - vertex1.lng()) /
+              (vertex2.lng() - vertex1.lng()) *
+              (vertex2.lat() - vertex1.lat()) <
+              lat
+            ) {
+              inPoly = !inPoly;
+            }
+          }
+
+          j = i;
+        }
+      }
+
+      return inPoly;
+    };
+  }
+
+  function toggleHeatmap() {
+    heatmap.setMap(heatmap.getMap() ? null : map);
+  }
+
+  function deleteAllShape() {
+    for (var i=0; i < all_polygons.length; i++)
+    {
+      all_polygons[i].setMap(null);
+    }
+    for (var i=0; i < all_circles.length; i++)
+    {
+      all_circles[i].setMap(null);
+    }
+    all_polygons = [];
+    all_circles = [];
+  }
+
+  function changeGradient() {
+    var gradient = [
+      'rgba(0, 255, 255, 0)',
+      'rgba(0, 255, 255, 1)',
+      'rgba(0, 191, 255, 1)',
+      'rgba(0, 127, 255, 1)',
+      'rgba(0, 63, 255, 1)',
+      'rgba(0, 0, 255, 1)',
+      'rgba(0, 0, 223, 1)',
+      'rgba(0, 0, 191, 1)',
+      'rgba(0, 0, 159, 1)',
+      'rgba(0, 0, 127, 1)',
+      'rgba(63, 0, 91, 1)',
+      'rgba(127, 0, 63, 1)',
+      'rgba(191, 0, 31, 1)',
+      'rgba(255, 0, 0, 1)'
+    ]
+    heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+  }
+
+  function changeRadius() {
+    heatmap.set('radius', heatmap.get('radius') ? null : 20);
+  }
+
+  function changeOpacity() {
+    heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+  }
+
+  // Heatmap data: 500 Points
+  function getPoints() {
+    var arr = [];
+    var locations = gon.locations;
+    $.each(locations, function( index, value ) {
+      latlon = new google.maps.LatLng(locations[index][1], locations[index][0]);
+      arr.push(latlon);
+
+      // Add marker
+      //var marker = new google.maps.Marker({
+      //  position: latlon,
+      //  map: map,
+      //  title: 'Hello World!'
+      //});
+
+      // Add maker event
+    });
+    return arr;
+  }
+
+  function showMarkers() {
+    var arr = [];
+    var locations = gon.locations;
+    $.each(locations, function( index, value ) {
+      latlon = new google.maps.LatLng(locations[index][1], locations[index][0]);
+
+      // Add marker
+      var marker = new google.maps.Marker({
+        position: latlon,
+        map: map,
+        title: 'Hello World!'
+      });
+
+      marker.addListener('click', function() {
+        $.ajax({
+          type: "GET",
+          url: Routes.detail_user_medicinal_plants_path(),
+          data: {lat: this.getPosition().lat(), lon: this.getPosition().lng()}
+        }).done(function() {
+          console.log("success");
+        });
+      });
+    });
+  }
+
+  function toggleSearchForm() {
+    $(".search-form-body").toggle( "slow" );
+  }

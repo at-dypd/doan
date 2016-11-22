@@ -1,0 +1,21 @@
+tr data-id= "show_#{plant_habitat.id}"
+  td =plant_habitat_counter+1
+  td =plant_habitat.name
+  td =plant_habitat.description
+  td =plant_habitat.created_at
+  td.text-center
+    a href="#"
+      i.glyphicon.glyphicon-pencil#edit_button
+    =link_to admin_plant_habitat_path(plant_habitat.id), method: :delete
+      i.glyphicon.glyphicon-trash
+tr.info style="display: none" data-id= plant_habitat.id
+  =form_for plant_habitat, url: admin_plant_habitat_path(plant_habitat.id), method: :put, remote: true do |f|
+    td
+    td
+      =f.text_field :name, class: "form-control"
+    td
+      =f.text_area :description, class: "form-control", row: 1
+    td
+      =plant_habitat.updated_at
+    td.text-center
+      =f.submit t(".ok"), class: "btn btn-primary ", id: "update_plant_habitat_btn"

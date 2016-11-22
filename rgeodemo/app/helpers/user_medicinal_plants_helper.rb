@@ -1,0 +1,2 @@
+module UserMedicinalPlantsHelper
+end

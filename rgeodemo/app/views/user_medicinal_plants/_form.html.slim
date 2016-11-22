@@ -1,0 +1,40 @@
+.row
+  .col-md-2.text-right
+    label
+      | Tên:
+  .col-md-3
+    =f.text_field :name, class: "form-control"
+.row
+  .col-md-2.text-right
+    label
+      | Ảnh đại diện:
+    span
+      =f.file_field :plant_avatar
+.row
+  .col-md-5.text-center
+    =image_tag(f.object.plant_avatar_url(:medium))
+br
+.row style="min-height: 100px"
+  .col-md-1
+  .col-md-3
+    =f.select :plant_order_id, @plant_orders.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_order")}, class: "form-control"
+  .col-md-3
+    =f.select :plant_class_id, @plant_classes.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_class")}, class: "form-control"
+  .col-md-3
+    =f.select :plant_kingdom_id, @plant_kingdoms.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_kingdom")}, class: "form-control"
+  .col-md-2
+    =f.select :plant_phylum_id, @plant_phylums.collect{|c| [c.name, c.id]}, {include_blank: t(".please_select_phylum")}, class: "form-control"
+.row
+  .col-md-2.text-right
+    label
+      =t(".used_parts")
+  .col-md-3
+    =select_tag "used_part_ids", options_for_select(@used_parts.collect{|c| [c.name, c.id]}), {class: "selectpicker used_part", multiple: true, include_blank: true}
+  .col-md-2.text-right
+    label
+      =t(".plant_habitats")
+  .col-md-3
+    =select_tag "plant_habitat_ids", options_for_select(@plant_habitats.collect{|c| [c.name, c.id]}), {class: "selectpicker plant_habitat", multiple: true, include_blank: true}
+.modal-footer
+  button.btn.btn-default data-dismiss="modal" type="button" =t ".close"
+  = f.submit "Cập nhật", :class => " btn btn-sm btn-primary"

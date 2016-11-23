@@ -22,6 +22,10 @@ $ ->
     readURL this
     return
   $(document).on 'mouseover', '#img_prev', ->
+
+  $(document).on 'change', '#medicinal_plant_plant_avatar', ->
+    readURLUser this
+    return
     
 
 readURL = (input) ->
@@ -30,6 +34,17 @@ readURL = (input) ->
 
     reader.onload = (e) ->
       $('#img_prev').attr('src', e.target.result).width(100).height 100
+      return
+
+    reader.readAsDataURL input.files[0]
+  return
+
+readURLUser = (input) ->
+  if input.files and input.files[0]
+    reader = new FileReader
+
+    reader.onload = (e) ->
+      $('.plant-image-frame-div > img').attr('src', e.target.result).width(200).height 200
       return
 
     reader.readAsDataURL input.files[0]

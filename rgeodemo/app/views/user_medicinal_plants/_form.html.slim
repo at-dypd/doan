@@ -4,15 +4,14 @@
       | Tên:
   .col-md-3
     =f.text_field :name, class: "form-control"
-.row
   .col-md-2.text-right
     label
       | Ảnh đại diện:
-    span
-      =f.file_field :plant_avatar
-.row
-  .col-md-5.text-center
-    =image_tag(f.object.plant_avatar_url(:medium))
+  .col-md-5
+    .plant-image-frame-div
+      =image_tag(f.object.plant_avatar_url(:medium), size: "200x200")
+    =f.file_field :plant_avatar
+    
 br
 .row style="min-height: 100px"
   .col-md-1

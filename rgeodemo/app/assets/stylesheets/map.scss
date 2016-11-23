@@ -27,9 +27,11 @@ html, body {
   position: absolute;
   top: 10px;
   z-index: 5;
+  opacity: 0.95;
 }
 
 .plant-map-frame {
   height: 550px;
   width: 100%;
+  margin-top: 10px;
 }

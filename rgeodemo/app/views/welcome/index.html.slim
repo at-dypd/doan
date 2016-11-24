@@ -15,6 +15,10 @@ script async="" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=A
         | Delete all shape
       button class="btn btn-default btn-round-lg" onclick="showMarkers()"
         | Show markers
+      button class="btn btn-default btn-round-lg" onclick="clearMarkers()"
+        | Hide markers
+      input type="checkbox" class="statistic-check-box"
+        | Thong Ke
     .plant-map-frame
       #map
       =render partial: "search"
@@ -25,3 +29,5 @@ script async="" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=A
         =hidden_field_tag "circle_points[]", "", multiple: true
 .modal-medicinal-plant
   =render "edit"
+.modal-statistics
+  =render "statistics"

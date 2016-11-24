@@ -22,10 +22,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :medicinal_plants
+  resources :medicinal_plants do
+  end
   resources :user_medicinal_plants do
     collection do
       get :detail
+      get :statitic
     end
   end
 end

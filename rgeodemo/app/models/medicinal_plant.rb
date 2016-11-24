@@ -5,8 +5,8 @@ class MedicinalPlant < ActiveRecord::Base
 												:plant_kingdom_id, :life_type_id, :plant_avatar]
 	has_many :medicinal_plants_locations, foreign_key: :medicinal_plant_id
 	has_many :medicinal_plants_plant_habitats, foreign_key: :medicinal_plant_id
-
-	# has_many :used_parts
+	has_many :medicinal_plants_used_parts, foreign_key: :medicinal_plant_id
+	has_many :used_parts, through: :medicinal_plants_used_parts
 	has_many :plant_habitats, through: :medicinal_plants_plant_habitats
 	has_many :locations, through: :medicinal_plants_locations
 	belongs_to :life_type

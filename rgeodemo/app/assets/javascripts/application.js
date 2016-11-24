@@ -17,4 +17,5 @@
 //= require bootstrap-select
 //= require prefix-free
 //= require js-routes
+//= require jquery-ui/effect.all
 //= require_tree .

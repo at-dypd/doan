@@ -2,11 +2,13 @@ javascript:
   var map, heatmap;
   var all_polygons = [];
   var all_circles = [];
+  var markers = [];
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 12,
       center: {lat: 15.9977352, lng: 107.9880772}
      });
+
     heatmap = new google.maps.visualization.HeatmapLayer({
       data: getPoints(),
       map: map
@@ -43,7 +45,19 @@ javascript:
       });
       this_form = $(".plant-map-frame").find(".drawing-form");
       this_form.find("#polygon_points").val(arr.join(','));
-      $(this_form).submit();
+      is_statistic_check_box = $(".statistic-check-box").is(":checked")
+      if(is_statistic_check_box) {
+        $.ajax({
+          type: "GET",
+          url: Routes.statitic_user_medicinal_plants_path(),
+          data: $(this_form).serialize()
+        }).done(function() {
+          console.log("success");
+        });
+      }
+      else{
+        $(this_form).submit();
+      }
     });
 
     google.maps.event.addListener(drawingManager, 'circlecomplete', function(circle) {
@@ -227,7 +241,7 @@ javascript:
         map: map,
         title: 'Hello World!'
       });
-
+      markers.push(marker);
       marker.addListener('click', function() {
         $.ajax({
           type: "GET",
@@ -240,6 +254,16 @@ javascript:
     });
   }
 
+  function clearMarkers() {
+    setMapOnAll(null);
+  }
+
   function toggleSearchForm() {
-    $(".search-form-body").toggle( "slow" );
+    $(".search-form-body").toggle("slow");
+  }
+
+  function setMapOnAll(map) {
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(map);
+    }
   }

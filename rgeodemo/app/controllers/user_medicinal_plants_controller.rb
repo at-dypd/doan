@@ -1,5 +1,6 @@
 class UserMedicinalPlantsController < ApplicationController
-	before_action :get_medicinal_plant, :get_search_condition, only: [:show]
+	before_action :get_medicinal_plant, only: [:show]
+	before_action :get_search_condition, only: [:show, :statitic]
 	before_action :init_data
 
 	def show
@@ -19,6 +20,13 @@ class UserMedicinalPlantsController < ApplicationController
 			format.js
 		end
 	end
+
+	def statitic
+    @medicinal_plants = @q.result.includes(:locations).order(:name)
+    respond_to do |format|
+      format.js
+    end
+  end
 
 	def update
 		

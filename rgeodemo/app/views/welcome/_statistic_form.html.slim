@@ -1,0 +1,15 @@
+tr
+	td
+		=statistic_form.name
+	td
+		=statistic_form.plant_phylum.try(:name)
+	td
+		=statistic_form.plant_kingdom.try(:name) 
+	td 
+		=statistic_form.plant_class.try(:name)
+	td
+		=statistic_form.plant_order.try(:name)
+	td
+		=statistic_form.life_type.try(:name)
+	td
+		=statistic_form.plant_habitats.pluck(:name).join(", ")

@@ -1,0 +1,20 @@
+.medicinal-plant-statitic-modal.modal.fade role="dialog" tabindex="-1" 
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  &times;
+        h4.modal-title 
+          span.glyphicon.glyphicon-th-large  =t ".statitic"
+          ul.pager
+      .medicinal-plant-detail
+      	table.table.table-striped.table-bordered.table-hover
+      		thead
+      			th
+      			th
+      			th
+      			th
+      			th
+      			th
+      		tbody
+      			=render partial: "statistic_form", collection: @medicinal_plants

@@ -34,4 +34,11 @@ html, body {
   height: 550px;
   width: 100%;
   margin-top: 10px;
+  -webkit-box-shadow: 6px 40px 132px 1px rgba(3,13,66,1);
+  -moz-box-shadow: 6px 40px 132px 1px rgba(3,13,66,1);
+  box-shadow: 6px 40px 132px 1px rgba(3,13,66,1);
+}
+
+body {
+  background: #A3CCFF !important;
 }

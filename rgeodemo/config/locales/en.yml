@@ -73,3 +73,24 @@ en:
     fail: "Thất bại"
   button:
     search: "Tìm "
+  name:
+    # class: lop, phylum: nganh, order: bo, kingdom: gioi, life_type: dang song, family: ho, plant_habitat: sinh canh
+    class: "Lớp"
+    phylum: "Ngành" 
+    order: "Bộ"
+    kingdom: "Giới"
+    life_type: "Dạng sống"
+    family: "Họ"
+    plant_habitat: "Sinh cảnh"
+
+
+
+
+
+
+
+
+
+
+
+

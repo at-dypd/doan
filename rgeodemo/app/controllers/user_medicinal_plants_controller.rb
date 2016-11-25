@@ -14,6 +14,7 @@ class UserMedicinalPlantsController < ApplicationController
 
 	def detail
 		point = Location.convert_to_point(params[:lat], params[:lon])
+		@location = Location.find_by(latlon: point)
 		@medicinal_plants = MedicinalPlant.includes(:locations).where(locations: {latlon: point})
 		@medicinal_plant = @medicinal_plants.first
 		respond_to do |format|

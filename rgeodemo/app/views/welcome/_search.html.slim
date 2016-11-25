@@ -27,15 +27,27 @@
         .col-md-2
           =select_tag :ids, options_for_select(@medicinal_plants.collect{|c| [c.name, c.id]}, selected: @medicinal_plant.try(:id)), {include_blank: true, class: "selectpicker", "data-url" => user_medicinal_plant_path(id: 1, q: params[:q]), multiple: true}
       br
-      .row.search-form
-        label
+      fieldset
+        legend
           | Chon muc luc
-      =f.select :plant_order_id_in, @plant_orders.collect{|c| [c.name, c.id]}, {include_blank: true}, class: "selectpicker", multiple: true, title: "please_select_order"
-      =f.select :plant_class_id_in, @plant_classes.collect{|c| [c.name, c.id]}, {include_blank: true}, class: "selectpicker", multiple: true, title: "please_select_class"
-      =f.select :plant_kingdom_id_in, @plant_kingdoms.collect{|c| [c.name, c.id]}, {include_blank: true}, class: "selectpicker", multiple: true, title: "please_select_kingdom"
-      =f.select :plant_phylum_id_in, @plant_phylums.collect{|c| [c.name, c.id]}, {include_blank: true}, class: "selectpicker", multiple: true, title: "please_select_phylum"
+        =f.select :plant_order_id_in, @plant_orders.collect{|c| [c.name, c.id]}, {include_blank: true}, class: "selectpicker", multiple: true, title: "Chọn Bộ"
+        =f.select :plant_class_id_in, @plant_classes.collect{|c| [c.name, c.id]}, {include_blank: true}, class: "selectpicker", multiple: true, title: "Chọn Lớp"
+        =f.select :plant_kingdom_id_in, @plant_kingdoms.collect{|c| [c.name, c.id]}, {include_blank: true}, class: "selectpicker", multiple: true, title: "Chọn Giới"
+        =f.select :plant_phylum_id_in, @plant_phylums.collect{|c| [c.name, c.id]}, {include_blank: true}, class: "selectpicker", multiple: true, title: "Chọn Ngành"
+      br
+      fieldset
+        legend
+        .row
+          .col-md-6
+            =select_tag "plant_habitats", options_for_select(@plant_habitats.collect{|c| [c.name, c.id]}, selected: params[:plant_habitat_ids]), {class: "selectpicker plant_habitat", multiple: true, include_blank: true, title: "Chọn Dạng sống"}
+            =hidden_field_tag "plant_habitat_ids", "", id: "plant_habitat_ids"
+          .col-md-6
+            =select_tag "used_parts", options_for_select(@used_parts.collect{|c| [c.name, c.id]}, selected: params[:used_part_ids]), {class: "selectpicker used_part", multiple: true, include_blank: true, title: "Chọn Bộ phận sử dụng"}
+            =hidden_field_tag "used_part_ids", "", id: "used_part_ids"
+
       br
         .row
           .col-md-3.pull-right.text-right
-            =f.submit t("button.search"), class: "btn btn-"
+            =f.submit t("button.search"), class: "btn btn-primary"
+
 

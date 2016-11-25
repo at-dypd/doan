@@ -7,14 +7,29 @@
         h4.modal-title 
           span.glyphicon.glyphicon-th-large  =t ".statitic"
           ul.pager
-      .medicinal-plant-detail
-      	table.table.table-striped.table-bordered.table-hover
-      		thead
-      			th
-      			th
-      			th
-      			th
-      			th
-      			th
-      		tbody
-      			=render partial: "statistic_form", collection: @medicinal_plants
+      .medicinal-plant-detail.table-statitic-medicinal-plant
+        .floating-panel
+          button class="btn btn-warning btn-round-lg"
+            | Export pdf
+          button class="btn btn-warning btn-round-lg"
+            | Export excel
+          button class="btn btn-warning btn-round-lg"
+            | Export csv
+        table.table.table-striped.table-bordered.table-hover.table-statitic-mp
+          thead
+            th
+              p Tên cây
+            th
+              p Ngành
+            th
+              p Giới
+            th
+              p Lớp 
+            th
+              p Bộ 
+            th
+              p Dạng sống
+            th
+              p Sinh cảnh
+          tbody
+            =render partial: "statistic_form", collection: @medicinal_plants

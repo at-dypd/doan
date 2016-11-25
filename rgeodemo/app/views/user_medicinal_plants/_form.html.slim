@@ -1,16 +1,41 @@
 .row
-  .col-md-2.text-right
-    label
-      | Tên:
-  .col-md-3
-    =f.text_field :name, class: "form-control"
-  .col-md-2.text-right
-    label
-      | Ảnh đại diện:
-  .col-md-5
-    .plant-image-frame-div
-      =image_tag(f.object.plant_avatar_url(:medium), size: "200x200")
-    =f.file_field :plant_avatar
+  .col-md-6
+    .row
+      .col-md-5.text-right
+        label
+          | Tên:
+      .col-md-7
+        =f.text_field :name, class: "form-control"
+    br
+    .row
+      .col-md-5.text-right
+        label
+          | Tên khoa hoc:
+      .col-md-7
+        =f.text_field :scientific_name, class: "form-control"
+    br
+    .row
+      .col-md-5.text-right
+        label
+          | Toạ độ X:
+      .col-md-7
+        =text_field_tag "medicinal_plant[lon]", @location.latlon.x, class: "form-control"
+    br
+    .row
+      .col-md-5.text-right
+        label
+          | Toạ độ Y:
+      .col-md-7
+        =text_field_tag "medicinal_plant[lat]", @location.latlon.y, class: "form-control"
+  .col-md-6
+    .col-md-4.text-right
+      label
+        | Ảnh đại diện:
+    .col-md-8
+      .plant-image-frame-div
+        =image_tag(f.object.plant_avatar_url(:medium), size: "200x200")
+      =f.file_field :plant_avatar
+
     
 br
 .row style="min-height: 100px"

@@ -7,4 +7,20 @@
   border-top: 1px solid #ccc;
   clear: both;
   margin-top: 50px;
+  max-width: 1200px;
+}
+
+nav {
+	background: #DDE6D5 !important;
+}
+
+nav a:hover{
+	font-size: 125%;
+	font-weight: bold;
+	background: #C2DC9B !important;
+}
+
+.button-header-form{
+	border-radius: 30px !important;
+	margin-left: 10px;
 }

@@ -3,6 +3,9 @@ javascript:
   var all_polygons = [];
   var all_circles = [];
   var markers = [];
+  var size = new OpenLayers.Size(21,25);
+  var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+  var icon = new OpenLayers.Icon('http://www.openlayers.org/api/img/zoom-world-mini.png',size,offset);
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 12,
@@ -232,6 +235,8 @@ javascript:
   function showMarkers() {
     var arr = [];
     var locations = gon.locations;
+    var markers_2 = new OpenLayers.Layer.Markers( "Markers" );
+    mapObject.addLayer(markers_2);
     $.each(locations, function( index, value ) {
       latlon = new google.maps.LatLng(locations[index][1], locations[index][0]);
 
@@ -242,6 +247,10 @@ javascript:
         title: 'Hello World!'
       });
       markers.push(marker);
+      marker_2 = new OpenLayers.Marker(new OpenLayers.LonLat(locations[index][0], locations[index][1]).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913")),icon.clone());
+      marker_2.events.register('mousedown', marker, function(evt) { alert(this.icon.url); OpenLayers.Event.stop(evt); });
+      markers_2.addMarker(marker_2);
+
       marker.addListener('click', function() {
         $.ajax({
           type: "GET",
@@ -267,3 +276,134 @@ javascript:
       markers[i].setMap(map);
     }
   }
+
+  var wmsUrl = "http://localhost:8080/geoserver/wms",
+    wmsLayer = null,
+    mapObject = null,
+    baseLayer = null;
+
+  var setCenter = function() {
+    mapObject.setCenter(new OpenLayers.LonLat(107.9880772, 15.9977352).transform(
+      new OpenLayers.Projection("EPSG:4326"),
+      new OpenLayers.Projection("EPSG:900913")), 10);
+  };
+
+  var bindExampleBtnsClick = function() {
+    $("#example-a-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer();
+    });
+
+    $("#example-b-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({});
+    });
+
+    $("#example-c-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({styles: "female_point"});
+    });
+
+    $("#example-d-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({styles: "male_point"});
+    });
+
+    $("#example-e-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({styles: "gender_point"});
+    });
+
+    $("#example-f-link").click(function(e) {
+      e.preventDefault();
+      getPoints();
+    });
+
+    $("#example-g-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({styles: "zoom_point"});
+    });
+
+    $("#example-h-link").click(function(e) {
+      e.preventDefault();
+      $.get("home/distance", function(data) {
+        var result = "" +
+        "<div>Cliente 1: lat: " + data["one"]["lat"] + " lon: " + data["one"]["lon"] + "</div>" +
+        "<div>Cliente 2: lat: " + data["two"]["lat"] + " lon: " + data["two"]["lon"] + "</div>" +
+        "<div>distancia: " + data["distance"] + "</div>"
+        $("#result").html(result);
+      });
+    });
+
+    $("#age-filter-btn").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({styles: "label_point", cql_filter: ("age > " + $("#age-input").val())})
+    });
+  };
+
+  var getPoints = function() {
+    $.get("home/points", function(points) {
+        var features = []
+        var vectorLayer = new OpenLayers.Layer.Vector("Vector layer", {projection: new OpenLayers.Projection("EPSG:900913")});
+
+        for(var i = 0; i < points.length; i++){
+            var geom = new OpenLayers.Geometry.fromWKT(points[i]["the_geom"]);
+            var pointFeature = new OpenLayers.Feature.Vector(geom.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913")), null, null);
+            features.push(pointFeature);
+        }
+
+        mapObject.addLayer(vectorLayer);
+        vectorLayer.addFeatures(features);
+        vectorLayer.refresh();
+    });
+  };
+
+  var removeWmsLayer = function() {
+    if (wmsLayer) {
+      mapObject.removeLayer(wmsLayer);
+      delete wmsLayer;
+    }
+  };
+
+  var showWmsLayer = function(options) {
+    removeWmsLayer();
+
+    var defaultOptions = {
+      srs: "EPSG:4326",
+      layers: "dypd:banahill_layer",
+      format: "image/png",
+      tiled: true,
+      transparent: true,
+    }
+
+    var mergedOptions = $.extend(defaultOptions, options);
+
+    wmsLayer = new OpenLayers.Layer.WMS("Tasmania state boundaries", wmsUrl, mergedOptions);
+    mapObject.addLayer(wmsLayer);
+  };
+
+  var initMapOpenLayer = function(){
+    mapObject = new OpenLayers.Map({
+      div: 'map',
+      numZoomLevels: 30,
+      minZoom: 28,
+      maxZoom: 35,
+      projection: "EPSG:900913",
+      maxResolution: 156543,
+      maxExtent: new OpenLayers.Bounds(-20037508,-20037508,20037508,20037508),
+    });
+
+    baseLayer = new OpenLayers.Layer.Google(
+      "Google Streets",
+      {numZoomLevels: 30}
+    );
+    mapObject.addLayer(baseLayer);
+
+    mapObject.addControl(new OpenLayers.Control.LayerSwitcher({'ascending':false}));
+    mapObject.addControl(new OpenLayers.Control.OverviewMap());
+    mapObject.addControl(new OpenLayers.Control.KeyboardDefaults());
+    showWmsLayer({});
+    showMarkers();
+    setCenter();
+  };
+  initMapOpenLayer();

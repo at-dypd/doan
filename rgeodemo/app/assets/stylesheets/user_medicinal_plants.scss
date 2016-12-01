@@ -11,3 +11,15 @@ table.table-statitic-mp > thead > tr > th {
   text-align: left;
   background-color: #DDE6D5;
 }
+.export-form {
+	margin-left: 40px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.export-form > button {
+	margin-right: 5px;
+}
+
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;  }

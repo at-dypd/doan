@@ -1,0 +1,23 @@
+meta charset="utf-8"
+=wicked_pdf_stylesheet_link_tag("user_medicinal_plants")
+=wicked_pdf_stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+.row
+  .col-md-12
+    table.table.table-striped.table-bordered.table-hover.table-statitic-mp
+      thead
+        th
+          p Tên cây
+        th
+          p Ngành
+        th
+          p Giới
+        th
+          p Lớp 
+        th
+          p Bộ 
+        th
+          p Dạng sống
+        th
+          p Sinh cảnh
+      tbody
+        =render partial: "statistic_form", collection: @medicinal_plants

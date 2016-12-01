@@ -7,14 +7,13 @@
         h4.modal-title 
           span.glyphicon.glyphicon-th-large  =t ".statitic"
           ul.pager
-      .medicinal-plant-detail.table-statitic-medicinal-plant
-        .floating-panel
-          button class="btn btn-warning btn-round-lg"
-            | Export pdf
+      .export-form 
+          =link_to "Export pdf", export_statitic_medicinal_plant_export_index_path(format: :pdf), class: "btn btn-warning btn-round-lg", target: "blank"
           button class="btn btn-warning btn-round-lg"
             | Export excel
           button class="btn btn-warning btn-round-lg"
             | Export csv
+      .medicinal-plant-detail.table-statitic-medicinal-plant
         table.table.table-striped.table-bordered.table-hover.table-statitic-mp
           thead
             th

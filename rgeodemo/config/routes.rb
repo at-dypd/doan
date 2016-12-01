@@ -30,4 +30,9 @@ Rails.application.routes.draw do
       get :statitic
     end
   end
+  resources :export do
+    collection do
+      get :export_statitic_medicinal_plant
+    end
+  end
 end

@@ -18,4 +18,5 @@
 //= require prefix-free
 //= require js-routes
 //= require jquery-ui/effect.all
+//= require openlayers-rails
 //= require_tree .

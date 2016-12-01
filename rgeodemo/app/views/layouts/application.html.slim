@@ -12,9 +12,12 @@ html
 
 
   body
-  	=render "layouts/header"
-  	.container
-    	= yield
+    =render "layouts/header"
+    .container
+      .button-toogle-header-menu
+        button.btn.button-toggle-header-menu
+          i.glyphicon.glyphicon-option-horizontal
+      = yield
     #footer
       .row.text-center
         | ***** Cay thuoc BA NA *****

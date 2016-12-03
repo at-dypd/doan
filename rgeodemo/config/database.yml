@@ -17,8 +17,8 @@
 default: &default
   adapter: postgis
   encoding: unicode
-  password: 961993dd
-  username: postgres
+  password: 123456
+  username: dypd
   port: 5432
   host: localhost
   # For details on connection pooling, see rails configuration guide
@@ -28,8 +28,8 @@ default: &default
 development:
   <<: *default
   schema_search_path: "public,postgis"
-  su_username: postgres
-  su_password: 961993dd
+  su_username: dypd
+  su_password: 123456
   postgis_extension: true
   database: rgeodemo_development
 

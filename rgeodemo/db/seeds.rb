@@ -6,3 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 # Google map api key: AIzaSyDevygh-3JBsUfmi2INmQs1ER7ZlpT4a7k 
+
+Role.create(name: "admin", description: "Admin role")
+Role.create(name: "user", description: "User role")
+User.create(name: "duydy", email: "admin@gmail.com", password: 12345678)

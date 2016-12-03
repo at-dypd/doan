@@ -248,7 +248,17 @@ javascript:
       });
       markers.push(marker);
       marker_2 = new OpenLayers.Marker(new OpenLayers.LonLat(locations[index][0], locations[index][1]).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913")),icon.clone());
-      marker_2.events.register('mousedown', marker, function(evt) { alert(this.icon.url); OpenLayers.Event.stop(evt); });
+      marker_2.events.register('mousedown', marker_2, function(evt) {
+        $.ajax({
+          type: "GET",
+          url: Routes.detail_user_medicinal_plants_path(),
+          data: {lat: marker.getPosition().lat(), lon: marker.getPosition().lng()}
+        }).done(function() {
+          console.log("success");
+        });
+        OpenLayers.Event.stop(evt); 
+        });
+
       markers_2.addMarker(marker_2);
 
       marker.addListener('click', function() {
@@ -344,7 +354,7 @@ javascript:
   var getPoints = function() {
     $.get("home/points", function(points) {
         var features = []
-        var vectorLayer = new OpenLayers.Layer.Vector("Vector layer", {projection: new OpenLayers.Projection("EPSG:900913")});
+        var vectorLayer = new OpenLayers.Layer.Vector("Cây thuốc", {projection: new OpenLayers.Projection("EPSG:900913")});
 
         for(var i = 0; i < points.length; i++){
             var geom = new OpenLayers.Geometry.fromWKT(points[i]["the_geom"]);
@@ -370,7 +380,7 @@ javascript:
 
     var defaultOptions = {
       srs: "EPSG:4326",
-      layers: "dypd:banahill_layer",
+      layers: "geoapp:banahill_layer",
       format: "image/png",
       tiled: true,
       transparent: true,
@@ -378,7 +388,7 @@ javascript:
 
     var mergedOptions = $.extend(defaultOptions, options);
 
-    wmsLayer = new OpenLayers.Layer.WMS("Tasmania state boundaries", wmsUrl, mergedOptions);
+    wmsLayer = new OpenLayers.Layer.WMS("Núi Bà Nà", wmsUrl, mergedOptions);
     mapObject.addLayer(wmsLayer);
   };
 
@@ -392,13 +402,39 @@ javascript:
       maxResolution: 156543,
       maxExtent: new OpenLayers.Bounds(-20037508,-20037508,20037508,20037508),
     });
-
     baseLayer = new OpenLayers.Layer.Google(
       "Google Streets",
-      {numZoomLevels: 30}
+      {numZoomLevels: 35}
     );
     mapObject.addLayer(baseLayer);
+    var pointLayer = new OpenLayers.Layer.Vector("Point Layer");
+    var lineLayer = new OpenLayers.Layer.Vector("Line Layer");
+    var polygonLayer = new OpenLayers.Layer.Vector("Polygon Layer");
+    var boxLayer = new OpenLayers.Layer.Vector("Box layer");
 
+    mapObject.addLayers([pointLayer, lineLayer, polygonLayer, boxLayer]);
+    mapObject.addControl(new OpenLayers.Control.MousePosition());
+    drawControls = {
+        point: new OpenLayers.Control.DrawFeature(pointLayer,
+            OpenLayers.Handler.Point, {featureAdded: pointFeature}),
+        line: new OpenLayers.Control.DrawFeature(lineLayer,
+            OpenLayers.Handler.Path),
+        polygon: new OpenLayers.Control.DrawFeature(polygonLayer,
+            OpenLayers.Handler.Polygon),
+        box: new OpenLayers.Control.DrawFeature(boxLayer,
+            OpenLayers.Handler.RegularPolygon, {
+                handlerOptions: {
+                    sides: 4,
+                    irregular: true
+                }
+            }
+        )
+    };
+
+    for(var key in drawControls) {
+        mapObject.addControl(drawControls[key]);
+    }
+    document.getElementById('noneToggle').checked = true;
     mapObject.addControl(new OpenLayers.Control.LayerSwitcher({'ascending':false}));
     mapObject.addControl(new OpenLayers.Control.OverviewMap());
     mapObject.addControl(new OpenLayers.Control.KeyboardDefaults());
@@ -406,4 +442,27 @@ javascript:
     showMarkers();
     setCenter();
   };
+
+  function toggleControl(element) {
+      for(key in drawControls) {
+          var control = drawControls[key];
+          if(element.value == key && element.checked) {
+              control.activate();
+          } else {
+              control.deactivate();
+          }
+      }
+  }
+
+  function allowPan(element) {
+      var stop = !element.checked;
+      for(var key in drawControls) {
+          drawControls[key].handler.stopDown = stop;
+          drawControls[key].handler.stopUp = stop;
+      }
+  }
+
+  function pointFeature(event) {
+    console.log(event.geometry.transform('EPSG:3857', 'EPSG:4326'));
+  }
   initMapOpenLayer();

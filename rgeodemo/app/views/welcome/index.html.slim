@@ -19,6 +19,26 @@ script async="" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=A
         | Hide markers
       input type="checkbox" class="statistic-check-box"
         | Thong Ke
+    ul#controlToggle
+      li
+        input#noneToggle checked="checked" name="type" onclick="toggleControl(this);" type="radio" value="none" /
+        label for="noneToggle"  navigate
+      li
+        input#pointToggle name="type" onclick="toggleControl(this);" type="radio" value="point" /
+        label for="pointToggle"  draw point
+      li
+        input#lineToggle name="type" onclick="toggleControl(this);" type="radio" value="line" /
+        label for="lineToggle"  draw line
+      li
+        input#polygonToggle name="type" onclick="toggleControl(this);" type="radio" value="polygon" /
+        label for="polygonToggle"  draw polygon
+      li
+        input#boxToggle name="type" onclick="toggleControl(this);" type="radio" value="box" /
+        label for="boxToggle"  draw box
+      li
+        input#allowPanCheckbox checked="true" name="allow-pan" onclick="allowPan(this);" type="checkbox" value="allow-pan" /
+        label for="allowPanCheckbox"  allow pan while drawing
+
     .plant-map-frame
       #map
       =render partial: "search"

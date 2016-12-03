@@ -17,6 +17,17 @@ html
       .button-toogle-header-menu
         button.btn.button-toggle-header-menu
           i.glyphicon.glyphicon-option-horizontal
+      #notice_message
+        -if flash[:success].present?
+          .alert.alert-success role="role"
+            button type="button" class="close" data-dismiss="alert" aria-label="Close"
+              span aria-hidden="true" &times;
+            =flash[:success]
+        -elsif flash[:danger].present?
+          .alert.alert-danger role="role"
+            button type="button" class="close" data-dismiss="alert" aria-label="Close"
+              span aria-hidden="true" &times;
+            =flash[:danger]
       = yield
     #footer
       .row.text-center

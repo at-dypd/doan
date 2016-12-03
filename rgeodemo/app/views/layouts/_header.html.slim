@@ -48,12 +48,16 @@ nav.navbar.navbar-default
             i.glyphicon.glyphicon-user
             span.caret
           ul.dropdown-menu
-            li
-              a href="#"  Action
-            li
-              a href="#"  Another action
-            li
-              a href="#"  Something else here
-            li.divider role="separator" 
-            li
-              a href="#"  Separated link
+            - if current_user.present?
+              li
+                a href="#"  Action
+              li
+                =link_to "Thông tin", edit_user_registration_path(current_user.id)
+              li
+                =link_to "Đổi mật khẩu", edit_user_password_path(current_user.id)
+              li.divider role="separator" 
+              li               
+                =link_to "Đăng xuất", destroy_user_session_path(current_user.id), method: :delete
+            - else
+              li
+                =link_to "Đăng nhập", new_user_session_path

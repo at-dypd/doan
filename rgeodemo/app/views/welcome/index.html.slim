@@ -1,24 +1,34 @@
 =render partial: "map_js"
 script async="" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDevygh-3JBsUfmi2INmQs1ER7ZlpT4a7k&libraries=visualization,drawing&callback=initMapOpenLayer"
-.row    
-  .col-md-12
-    .floating-panel
-      button class="btn btn-default btn-round-lg" onclick="toggleHeatmap()" 
-        | Toggle Heatmap
-      button class="btn btn-default btn-round-lg" onclick="changeGradient()" 
-        | Change gradient
-      button class="btn btn-default btn-round-lg" onclick="changeRadius()" 
-        | Change radius
-      button class="btn btn-default btn-round-lg" onclick="changeOpacity()" 
-        | Change opacity
-      button class="btn btn-default btn-round-lg" onclick="deleteAllShape()"
-        | Delete all shape
-      button class="btn btn-default btn-round-lg" onclick="showMarkers()"
-        | Show markers
-      button class="btn btn-default btn-round-lg" onclick="clearMarkers()"
-        | Hide markers
-      input type="checkbox" class="statistic-check-box"
-        | Thong Ke
+.row-fluid
+  .span3
+    ul.nav.nav-tabs.nav-stacked.ul-menu-right
+      li
+        a class="btn btn-default btn-round-lg" onclick="toggleHeatmap()" 
+          | Toggle Heatmap
+      li
+        a class="btn btn-default btn-round-lg" onclick="changeGradient()" 
+          | Change gradient
+      li
+        a class="btn btn-default btn-round-lg" onclick="changeRadius()" 
+          | Change radius
+      li
+        a class="btn btn-default btn-round-lg" onclick="changeOpacity()" 
+          | Change opacity
+      li
+        a class="btn btn-default btn-round-lg" onclick="deleteAllShape()"
+          | Delete all shape
+      li
+        a class="btn btn-default btn-round-lg" onclick="showMarkers()"
+          | Show markers
+      li
+        a class="btn btn-default btn-round-lg" onclick="clearMarkers()"
+          | Hide markers
+
+  #result 
+  .span9
+    input type="checkbox" class="statistic-check-box"
+      | Thong Ke
     .plant-map-frame
       #map
       =render partial: "search"

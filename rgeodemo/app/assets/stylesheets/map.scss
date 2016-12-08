@@ -42,27 +42,26 @@ html, body {
 body {
   /*background: url("/assets/body_global.png") !important;*/
 }
+
 ul.ul-menu-right {
-  padding-top: 30px;
+  padding-top: 40px;
 }
 
+ul#controlToggle > li {
+  float: left;
+  padding-right: 10px;
+}
 
+a.btn-menu-right {
+  background-color: #E7E7E7 !important;
+}
 
+a.btn-menu-right:hover {
+  background-color: #CBE6A3 !important;
+  box-shadow: 2px 5px 2px #888888;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ul.ul-menu-right > li {
+  padding-bottom: 3px;
+}
 

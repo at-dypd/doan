@@ -33,5 +33,6 @@ class WelcomeController < ApplicationController
     @plant_classes = PlantClass.all.order(:name)
     @plant_kingdoms = PlantKingdom.all.order(:name)
     @plant_phylums = PlantPhylum.all.order(:name)
+    gon.icon = ActionController::Base.helpers.asset_path("plant_icon.png")
   end
 end

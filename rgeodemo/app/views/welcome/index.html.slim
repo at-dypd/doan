@@ -1,34 +1,58 @@
 =render partial: "map_js"
 script async="" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDevygh-3JBsUfmi2INmQs1ER7ZlpT4a7k&libraries=visualization,drawing&callback=initMapOpenLayer"
 .row-fluid
-  .span3
+  .col-md-3
     ul.nav.nav-tabs.nav-stacked.ul-menu-right
       li
-        a class="btn btn-default btn-round-lg" onclick="toggleHeatmap()" 
-          | Toggle Heatmap
+        a class="btn btn-default btn-round-lg btn-menu-right" onclick="toggleHeatmap()" 
+          | Hiển thị bản đồ nhiệt
       li
-        a class="btn btn-default btn-round-lg" onclick="changeGradient()" 
-          | Change gradient
+        a class="btn btn-default btn-round-lg btn-menu-right" onclick="changeGradient()" 
+          | Thay đổi tần suất nhiệt
       li
-        a class="btn btn-default btn-round-lg" onclick="changeRadius()" 
-          | Change radius
+        a class="btn btn-default btn-round-lg btn-menu-right" onclick="changeRadius()" 
+          | Thay đổi bán kính
       li
-        a class="btn btn-default btn-round-lg" onclick="changeOpacity()" 
-          | Change opacity
+        a class="btn btn-default btn-round-lg btn-menu-right" onclick="changeOpacity()" 
+          | Thay đổi độ trong suốt
       li
-        a class="btn btn-default btn-round-lg" onclick="deleteAllShape()"
-          | Delete all shape
+        a class="btn btn-default btn-round-lg btn-menu-right" onclick="deleteAllShape()"
+          | Xoá hình vẽ
+      / li
+      /   a class="btn btn-default btn-round-lg" onclick="showMarkers()"
+      /     | Hiển thị 
+      / li
+      /   a class="btn btn-default btn-round-lg" onclick="clearMarkers()"
+      /     | Hide markers
       li
-        a class="btn btn-default btn-round-lg" onclick="showMarkers()"
-          | Show markers
-      li
-        a class="btn btn-default btn-round-lg" onclick="clearMarkers()"
-          | Hide markers
+        a class="btn btn-default btn-round-lg btn-menu-right" onclick="exportMyMap()"
+          | In bản đồ
 
   #result 
-  .span9
-    input type="checkbox" class="statistic-check-box"
-      | Thong Ke
+  .col-md-9
+    ul#controlToggle
+      li
+        input#noneToggle checked="checked" name="type" onclick="toggleControl(this);" type="radio" value="none" /
+        label for="noneToggle"  Điều hướng
+      li
+        input#pointToggle name="type" onclick="toggleControl(this);" type="radio" value="point" /
+        label for="pointToggle"  Vẽ điểm
+      li
+        input#lineToggle name="type" onclick="toggleControl(this);" type="radio" value="line" /
+        label for="lineToggle"  Vẽ đường
+      li
+        input#polygonToggle name="type" onclick="toggleControl(this);" type="radio" value="polygon" /
+        label for="polygonToggle"  Vẽ đa giác 
+      li
+        input#boxToggle name="type" onclick="toggleControl(this);" type="radio" value="box" /
+        label for="boxToggle"  Vẽ hình chữ nhật
+      li
+        input#allowPanCheckbox checked="true" name="allow-pan" onclick="allowPan(this);" type="checkbox" value="allow-pan" /
+        label for="allowPanCheckbox"  Cho phép kéo bản đồ khi vẽ
+      li
+        input type="checkbox" class="statistic-check-box"
+          | Thống Kê
+    br
     .plant-map-frame
       #map
       =render partial: "search"

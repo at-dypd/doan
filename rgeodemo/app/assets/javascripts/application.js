@@ -19,4 +19,6 @@
 //= require js-routes
 //= require jquery-ui/effect.all
 //= require openlayers-rails
+//= require html2canvas
+//= require export_map
 //= require_tree .

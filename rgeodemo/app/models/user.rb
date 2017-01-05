@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-
+         
   belongs_to :role, foreign_key: :role_id
-
+  
   before_save :add_role
 
   def add_role

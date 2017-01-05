@@ -4,28 +4,25 @@
   .logo Đăng nhập
   /! Main Form
   .login-form-1
-    form#login-form.text-left
+    = form_for(resource, as: resource_name, url: session_path(resource_name), class: "text-left", id: "login-form") do |f|
+      = devise_error_messages!
       .login-form-main-message
       .main-login-form
         .login-group
           .form-group
             label.sr-only for="lg_username"  Email
-            input#lg_username.form-control name="lg_username" placeholder="username" type="text" /
+            =f.email_field :email, autofocus: true, placeholder: "email", class: "form-control", id: "lg_username"
           .form-group
             label.sr-only for="lg_password"  Password
-            input#lg_password.form-control name="lg_password" placeholder="password" type="password" /
+            =f.password_field :password, autocomplete: "off", placeholder: "password", class: "form-control", id: "lg_password"
           .form-group.login-group-checkbox
-            input#lg_remember name="lg_remember" type="checkbox" /
-            label for="lg_remember"  ghi nhớ
+            -if devise_mapping.rememberable?
+              =f.check_box :remember_me, id: "lg_remember"
+              label for="lg_remember"  ghi nhớ
         button.login-button type="submit" 
           i.fa.fa-chevron-right
       .etc-login-form
-        p
-          | Quên mật khẩu?
-          a href="#"  click here
-        p
-          | Bạn mới đến?
-          a href="#"  Tạo tài khoản mới
+        = render "devise/shared/links"
   /! end:Main Form
 /! REGISTRATION FORM
 / .text-center style=("padding:50px 0") 

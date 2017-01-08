@@ -13,6 +13,7 @@ class WelcomeController < ApplicationController
 
 	def get_search_condition
     params[:q] ||= {}
+    params[:q][:id_in] ||= params[:ids]
     if params[:polygon_points].present?
       latlons = Location.convert_latlon(params[:polygon_points].split(",").in_groups_of(2))      
       params[:q][:locations_latlon_in] = latlons

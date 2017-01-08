@@ -13,4 +13,4 @@ tr
 	td
 		=statistic_form.life_type.try(:name)
 	td
-		=statistic_form.plant_habitats.pluck(:name).join(", ")
+		=statistic_form.plant_habitats.collect{|c| c.name}.join(", ")

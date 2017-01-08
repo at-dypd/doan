@@ -2,7 +2,9 @@ class WelcomeController < ApplicationController
 	before_action :get_search_condition, :init_data
 
 	def index
-		@medicinal_plants = @q.result.includes(:locations).order(:name)
+		@medicinal_plants = @q.result.includes(:locations, :used_parts, :plant_habitats,
+                                           :life_type, :plant_phylum, :plant_class,
+                                           :plant_order, :plant_kingdom).order(:name)
 		locations = @medicinal_plants.map(&:locations).flatten.uniq
 		@medicinal_plant = @medicinal_plants.first
 		gon.locations = locations.collect{|c| [c.latlon.x, c.latlon.y]}
